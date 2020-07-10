@@ -23,7 +23,7 @@ class SelectionDialog extends StatefulWidget {
     Key key,
     this.showCountryOnly,
     this.emptySearchBuilder,
-    InputDecoration searchDecoration = const InputDecoration(),
+    this.searchDecoration,
     this.searchStyle,
     this.textStyle,
     this.showFlag,
@@ -31,8 +31,6 @@ class SelectionDialog extends StatefulWidget {
     this.size,
     this.hideSearch = false,
   })  : assert(searchDecoration != null, 'searchDecoration must not be null!'),
-        this.searchDecoration =
-            searchDecoration.copyWith(prefixIcon: Icon(Icons.search)),
         super(key: key);
 
   @override
@@ -45,6 +43,7 @@ class _SelectionDialogState extends State<SelectionDialog> {
 
   @override
   Widget build(BuildContext context) => SimpleDialog(
+        backgroundColor: Theme.of(context).backgroundColor,
         titlePadding: const EdgeInsets.all(0),
         title: Column(
           mainAxisSize: MainAxisSize.min,
@@ -53,9 +52,7 @@ class _SelectionDialogState extends State<SelectionDialog> {
             IconButton(
               padding: const EdgeInsets.all(0),
               iconSize: 20,
-              icon: Icon(
-                Icons.close,
-              ),
+              icon: Icon(Icons.close, color: Theme.of(context).primaryColor),
               onPressed: () => Navigator.pop(context),
             ),
             if (!widget.hideSearch)
@@ -148,7 +145,10 @@ class _SelectionDialogState extends State<SelectionDialog> {
     }
 
     return Center(
-      child: Text('No country found'),
+      child: Text('No country found',
+          style: TextStyle(
+              color: Theme.of(context).primaryColor,
+              fontFamily: Theme.of(context).textTheme.title.fontFamily)),
     );
   }
 
